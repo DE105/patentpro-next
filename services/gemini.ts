@@ -6,7 +6,7 @@ import { AnalysisResult } from "../types";
 const MODEL_NAME = 'gemini-3-pro-preview';
 
 export const analyzePatentTask = async (
-  prompt: string, 
+  prompt: string,
   systemInstruction: string,
   useThinking: boolean = true,
   useSearch: boolean = false,
@@ -14,15 +14,16 @@ export const analyzePatentTask = async (
 ): Promise<AnalysisResult> => {
   // Always use a named parameter and direct process.env.API_KEY access.
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  
+
   const config: any = {
     systemInstruction,
-    temperature: 0.7,
+    // Gemini 3 recommends keeping temperature at default 1.0 for optimal reasoning.
   };
 
   if (useThinking) {
-    // The maximum thinking budget for gemini-3-pro-preview is 32768.
-    config.thinkingConfig = { thinkingBudget: 32768 };
+    // Gemini 3 uses thinkingLevel instead of thinkingBudget: "low", "high" (default)
+    // "high" maximizes reasoning depth, "low" minimizes latency and cost.
+    config.thinkingConfig = { thinkingLevel: "high" };
   }
 
   if (useSearch) {
