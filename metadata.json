@@ -1,0 +1,7 @@
+{
+  "name": "PatentPro Next",
+  "description": "A second-generation AI patent workstation powered by Gemini 3 Flash Thinking Mode, designed for professional patent attorneys to draft, analyze, and respond to office actions with unprecedented precision.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
