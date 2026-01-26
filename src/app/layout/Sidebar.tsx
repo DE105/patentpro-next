@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AppView } from '../types';
+import { AppView, sidebarMenuItems } from '@/shared';
 
 interface SidebarProps {
   currentView: AppView;
@@ -8,14 +8,6 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange }) => {
-  const menuItems = [
-    { id: AppView.DASHBOARD, icon: '🏠', label: '工作台' },
-    { id: AppView.DRAFTING, icon: '✍️', label: '说明书撰写' },
-    { id: AppView.OA_ASSISTANT, icon: '⚖️', label: '审查意见答复' },
-    { id: AppView.UNDERSTANDER, icon: '🧠', label: '技术深度理解' },
-    { id: AppView.DIFF_EXPERT, icon: '↔️', label: '差异对比分析' },
-  ];
-
   return (
     <aside className="w-64 border-r border-zinc-200 bg-white/80 backdrop-blur-xl flex flex-col z-20 shadow-sm">
       <div className="p-6">
@@ -29,7 +21,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange }) => {
         </div>
 
         <nav className="space-y-1">
-          {menuItems.map((item) => (
+          {sidebarMenuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => onViewChange(item.id)}

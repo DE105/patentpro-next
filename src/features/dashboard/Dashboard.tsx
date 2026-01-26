@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AppView } from '../types';
+import { AppView } from '@/shared';
 
 interface DashboardProps {
   onNavigate: (view: AppView) => void;

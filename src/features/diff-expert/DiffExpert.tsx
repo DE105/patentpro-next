@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { analyzePatentTask } from '../services/gemini';
+import { analyzePatentTask, getBase64FromFile } from '@/shared';
 
 interface MediaFile {
   data: string;
@@ -16,12 +16,11 @@ const DiffExpert: React.FC = () => {
   const [doc2File, setDoc2File] = useState<MediaFile | null>(null);
   const [diffResult, setDiffResult] = useState('');
 
-  const handleFileUpload = (side: 'A' | 'B', e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (side: 'A' | 'B', e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = (reader.result as string).split(',')[1];
+      try {
+        const base64String = await getBase64FromFile(file);
         const media = {
           data: base64String,
           mimeType: file.type || 'application/pdf',
@@ -29,8 +28,9 @@ const DiffExpert: React.FC = () => {
         };
         if (side === 'A') setDoc1File(media);
         else setDoc2File(media);
-      };
-      reader.readAsDataURL(file);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 

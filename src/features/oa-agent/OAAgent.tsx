@@ -1,7 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { analyzePatentTask } from '../services/gemini';
-import { AnalysisResult } from '../types';
+import { analyzePatentTask, AnalysisResult, getBase64FromFile } from '@/shared';
 
 interface DocItem {
   id: string;
@@ -43,17 +42,17 @@ const OAAgent: React.FC = () => {
     setDocs(docs.map(d => d.id === id ? { ...d, ...updates } : d));
   };
 
-  const handleFileUpload = (id: string, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (id: string, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = (reader.result as string).split(',')[1];
+      try {
+        const base64String = await getBase64FromFile(file);
         updateDoc(id, {
           file: { data: base64String, mimeType: file.type || 'application/pdf', name: file.name }
         });
-      };
-      reader.readAsDataURL(file);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 

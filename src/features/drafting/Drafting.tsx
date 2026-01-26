@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { analyzePatentTask } from '../services/gemini';
+import { analyzePatentTask, readFileAsDataUrl } from '@/shared';
 
 const Drafting: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -8,14 +8,15 @@ const Drafting: React.FC = () => {
   const [imageData, setImageData] = useState<string | null>(null);
   const [result, setResult] = useState('');
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageData(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const dataUrl = await readFileAsDataUrl(file);
+        setImageData(dataUrl);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { analyzePatentTask } from '../services/gemini';
+import { analyzePatentTask, getBase64FromFile } from '@/shared';
 
 const Understander: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -8,19 +8,19 @@ const Understander: React.FC = () => {
   const [mediaData, setMediaData] = useState<{ data: string; mimeType: string; name: string } | null>(null);
   const [analysis, setAnalysis] = useState('');
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = (reader.result as string).split(',')[1];
+      try {
+        const base64String = await getBase64FromFile(file);
         setMediaData({
           data: base64String,
           mimeType: file.type || 'application/pdf',
           name: file.name
         });
-      };
-      reader.readAsDataURL(file);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 

@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
-import { AnalysisResult } from "../types";
+import { AnalysisResult } from "@/shared/types";
 
 // Complex Text Tasks like patent drafting and analysis require the specialized gemini-3-pro-preview model.
 const MODEL_NAME = 'gemini-3-pro-preview';

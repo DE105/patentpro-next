@@ -2,19 +2,56 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+# PatentPro Next
 
-This contains everything you need to run your app locally.
+现代化专利协同工作站前端（Vite + React + TypeScript）。
 
-View your app in AI Studio: https://ai.studio/apps/drive/1fuQg64PG__h85JB9DuDijEY36ydEZVqK
+## 本地运行
 
-## Run Locally
+**前置条件：** Node.js
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
+1. 安装依赖：
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. 在 `.env.local` 中设置 `GEMINI_API_KEY`
+3. 启动开发环境：
    `npm run dev`
+
+## 目录结构
+
+```
+src/
+  app/                 应用入口与布局
+    App.tsx
+    layout/            通用布局组件
+      Sidebar.tsx
+  features/            业务功能域
+    dashboard/
+      Dashboard.tsx
+    drafting/
+      Drafting.tsx
+    oa-agent/
+      OAAgent.tsx
+    understander/
+      Understander.tsx
+    diff-expert/
+      DiffExpert.tsx
+  shared/              跨功能共享
+    constants/
+      navigation.ts
+    services/
+      gemini.ts
+    types/
+      index.ts
+    utils/
+      file.ts
+  main.tsx             入口文件
+  styles.css           全局样式入口（含 Tailwind）
+```
+
+## 路径别名
+
+`@` 指向 `src/`，示例：`@/shared/types`
+
+## Tailwind CSS
+
+使用本地构建方式（非 CDN），样式入口为 `src/styles.css`。

@@ -1,12 +1,8 @@
 
 import React, { useState } from 'react';
-import { AppView } from './types';
-import Sidebar from './components/Sidebar';
-import Dashboard from './views/Dashboard';
-import Drafting from './views/Drafting';
-import OAAgent from './views/OAAgent';
-import Understander from './views/Understander';
-import DiffExpert from './views/DiffExpert';
+import { AppView } from '@/shared';
+import Sidebar from '@/app/layout/Sidebar';
+import { Dashboard, Drafting, OAAgent, Understander, DiffExpert } from '@/features';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>(AppView.DASHBOARD);
